@@ -5,7 +5,7 @@
   "author": "Gabrielzg1",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon -L --inspect=0.0.0.0 index.js",
+    "start": "nodemon -L  index.js",
     "test": "jest"
   },
   "dependencies": {

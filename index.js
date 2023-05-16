@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-	res.send("Hello World - teste de atulizacao");
+	res.send("<h1>Hello World</h1><h2>API DO PROJETO - GRUPO 3</h2>");
 });
 
 //Rotas para os CRUDs
