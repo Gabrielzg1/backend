@@ -1,13 +1,15 @@
 const Sequilize = require("sequelize");
 
-const sequelize = new Sequilize(
-	process.env.PG_DB,
-	process.env.PG_USER,
-	process.env.PG_PASSWORD,
-	{
-		host: process.env.PG_HOST,
-		dialect: "postgres",
-	}
-);
+const sequelize = new Sequilize("node_db", "Gabriel", "12345", {
+	host: "0.0.0.0",
+	dialect: "postgres",
+});
 
 module.exports = sequelize;
+
+/*
+- PG_DB=node_db
+      - PG_USER=Gabriel
+      - PG_PASSWORD=12345
+      - PG_HOST=node_db
+*/

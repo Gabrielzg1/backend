@@ -7,17 +7,20 @@ const app = express();
 
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
-// URL da conexáo
-const mongoDBUrl = "mongodb://mongodb:27017/mydatabase";
 
-//Conectando o banco de dados
+// URL da conexáo
+const uri = "mongodb://localhost:27017/local";
+
 mongoose
-	.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+	.connect(uri, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	})
 	.then(() => {
-		console.log("Conexão bem-sucedida com o banco de dados MongoDB.");
+		console.log("Conexão com o banco de dados estabelecida");
 	})
 	.catch((error) => {
-		console.error("Erro ao conectar ao banco de dados MongoDB:", error);
+		console.error("Erro ao conectar-se ao banco de dados:", error);
 	});
 
 app.use((req, res, next) => {
@@ -27,7 +30,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-	res.send("<h1>Hello World</h1><h2>API DO PROJETO - GRUPO 3</h2>");
+	res.send("<h1>Hello World</h1><h2>API DO PROJETO - GRUPO 3- teste</h2>");
 });
 
 //Rotas para os CRUDs
