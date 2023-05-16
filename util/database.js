@@ -1,8 +1,8 @@
 const Sequilize = require("sequelize");
 
 const sequelize = new Sequilize("node_db", "Gabriel", "12345", {
-	host: "0.0.0.0",
-	dialect: "postgres",
+  host: "0.0.0.0",
+  dialect: "postgres",
 });
 
 module.exports = sequelize;
