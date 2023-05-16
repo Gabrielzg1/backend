@@ -1,66 +1,98 @@
 const User = require("../models/user");
 
-// CRUD Controllers
+class UsersController {
+	async index(req, res) {
+		try {
+			const users = await User.find();
+			return res.json(users);
+		} catch (err) {
+			console.error(err);
+			return res.status(500).json({ error: "Internal server error." });
+		}
+	}
 
-//get all users
-exports.getUsers = (req, res, next) => {
-  User.findAll()
-    .then((users) => {
-      res.status(200).json({ users: users });
-    })
-    .catch((err) => {});
-};
+	async show(req, res) {
+		try {
+			const { id } = req.params;
+			const user = await User.findById(id);
+			if (!user) return res.status(404).json();
+			return res.json(user);
+		} catch (err) {
+			console.log(err);
+			return res.status(500).json({ error: "Internal server error." });
+		}
+	}
+	async showSubjects(req, res) {
+		try {
+			const { id } = req.params;
+			const user = await User.findById(id);
+			if (!user) return res.status(404).json();
+			const subject = new Array();
+			for (let i = 0; i < user.subjects.length; i++) {
+				subject.push(await Subjects.findOne({ name: user.subjects[i] }));
+			}
+			return res.status(200).json(subject);
+		} catch (err) {
+			console.error(err);
+			return res.status(500).json({ error: "Internal server error." });
+		}
+	}
+	async create(req, res) {
+		try {
+			const { username, email, password } = req.body;
+			const user = await User.findOne({ email });
 
-//get user by id
-exports.getUser = (req, res, next) => {
-  const userId = req.params.userId;
-  User.findByPk(userId)
-    .then((user) => {
-      if (!user) {
-        return res.status(404).json({ message: "User not found!" });
-      }
-      res.status(200).json({ user: user });
-    })
-    .catch((err) => console.log(err));
-};
+			if (user) {
+				return res
+					.status(422)
+					.json({ message: `User ${email} alreary exists` });
+			}
 
-//create user
-exports.createUser = (req, res, next) => {
-  const { name, email, password } = req.body;
+			//crypt the password
+			const newUser = await User.create({
+				username: username,
+				email: email,
+				password: password,
+			});
 
-  User.create({
-    name: name,
-    email: email,
-    password: password,
-    permission_level: 0,
-  })
-    .then((result) => {
-      res.status(201).json({
-        message: "User created successfully!",
-        user: result,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+			return res.status(201).json(newUser);
+		} catch (err) {
+			console.error(err);
+			return res.status(500).json({ error: "Internal server error." });
+		}
+	}
+	async update(req, res) {
+		try {
+			const { id } = req.params;
+			const { email, password } = req.body;
 
-//delete user
-exports.deleteUser = (req, res, next) => {
-  const userId = req.params.userId;
-  User.findByPk(userId)
-    .then((user) => {
-      if (!user) {
-        return res.status(404).json({ message: "User not found!" });
-      }
-      return User.destroy({
-        where: {
-          id: userId,
-        },
-      });
-    })
-    .then((result) => {
-      res.status(200).json({ message: "User deleted!" });
-    })
-    .catch((err) => console.log(err));
-};
+			const user = await User.findById(id);
+
+			if (!user) {
+				return res.status(404).json();
+			}
+
+			await user.updateOne({ email, password });
+
+			return res.status(200).json();
+		} catch (err) {
+			console.error(err);
+			return res.status(500).json({ error: "Internal server error." });
+		}
+	}
+	async destroy(req, res) {
+		try {
+			const { id } = req.params;
+			const user = await User.findById(id);
+			if (!user) {
+				return res.status(404).json();
+			}
+			await user.deleteOne();
+			return res.status(200).json();
+		} catch (err) {
+			console.error(err);
+			return res.status(500).json({ error: "Internal server error." });
+		}
+	}
+}
+module.exports = new UsersController();
