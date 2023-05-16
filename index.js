@@ -8,8 +8,9 @@ const app = express();
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
+// URL da conexáo
 const mongoDBUrl = "mongodb://mongodb:27017/mydatabase";
-
+//Conectando o banco de dados
 mongoose
 	.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
@@ -26,13 +27,10 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-	res.send("Hello World");
+	res.send("Hello World - teste de atulizacao");
 });
 
-app.get("/teste", (req, res) => {
-	res.send("Hello World");
-});
-
+//Rotas para os CRUDs
 app.use("/admins", require("./routes/admins"));
 app.use("/users", require("./routes/users"));
 
@@ -48,7 +46,7 @@ app.use((error, req, res, next) => {
 		await sequelize.sync({ force: false });
 		app.listen(3000);
 	} catch (error) {
-		//console.error(error);
+		console.error(error);
 	}
 })();
 
