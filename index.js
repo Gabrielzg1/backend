@@ -4,12 +4,13 @@ const sequelize = require("./util/database");
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 const app = express();
+const port = 3000;
 
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
 // URL da conexáo
-const uri = "mongodb://localhost:27017/local";
+const uri = "mongodb://localhost:27017/admin";
 
 mongoose
 	.connect(uri, {
@@ -17,10 +18,10 @@ mongoose
 		useUnifiedTopology: true,
 	})
 	.then(() => {
-		console.log("Conexão com o banco de dados estabelecida");
+		//console.log("MONGODB - Conexão com o banco de dados estabelecida");
 	})
 	.catch((error) => {
-		console.error("Erro ao conectar-se ao banco de dados:", error);
+		//console.error("Erro ao conectar-se ao banco de dados:", error);
 	});
 
 app.use((req, res, next) => {
@@ -47,9 +48,11 @@ app.use((error, req, res, next) => {
 (async () => {
 	try {
 		await sequelize.sync({ force: false });
-		app.listen(3000);
+		if (process.env.NODE_ENV !== "test") {
+			app.listen(port);
+		}
 	} catch (error) {
-		console.error(error);
+		//console.error(error);
 	}
 })();
 

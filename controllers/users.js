@@ -4,7 +4,7 @@ class UsersController {
 	async index(req, res) {
 		try {
 			const users = await User.find();
-			return res.json(users);
+			return res.json(users).status(200);
 		} catch (err) {
 			console.error(err);
 			return res.status(500).json({ error: "Internal server error." });
@@ -16,7 +16,7 @@ class UsersController {
 			const { id } = req.params;
 			const user = await User.findById(id);
 			if (!user) return res.status(404).json();
-			return res.json(user);
+			return res.json(user).status(200);
 		} catch (err) {
 			console.log(err);
 			return res.status(500).json({ error: "Internal server error." });
@@ -74,7 +74,7 @@ class UsersController {
 
 			await user.updateOne({ email, password });
 
-			return res.status(200).json();
+			return res.status(200).json(user);
 		} catch (err) {
 			console.error(err);
 			return res.status(500).json({ error: "Internal server error." });

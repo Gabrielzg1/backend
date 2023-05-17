@@ -1,9 +1,12 @@
 const request = require("supertest");
-//const dbConnection = require("./util/database");
 const app = require("../index");
+const sequelize = require("../util/database");
 
-describe("API Tests", () => {
-  test("GET / should return status 200", async () => {
-    expect((await request(app).get("/")).status).toBe(200);
-  });
+let server;
+
+describe("API TEST", () => {
+	it("My Space Test", async () => {
+		const response = await request(app).get("/users");
+		expect(response.status).toEqual(200);
+	});
 });
