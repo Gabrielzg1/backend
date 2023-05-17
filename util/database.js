@@ -1,16 +1,25 @@
 const Sequilize = require("sequelize");
+require("dotenv/config");
 
-const sequelize = new Sequilize("node_db", "Gabriel", "12345", {
-	host: "0.0.0.0",
-	dialect: "postgres",
-	logging: false,
-});
+const sequelize = new Sequilize(
+  process.env.PG_DB,
+  process.env.PG_USER,
+  process.env.PG_PASSWORD,
+  {
+    host: process.env.PG_HOST,
+    dialect: "postgres",
+    logging: false,
+  }
+);
 
 module.exports = sequelize;
 
+// Quando for usar no docker substituir a variael sequelize !!!!!!!
 /*
-      - PG_DB=node_db
-      - PG_USER=Gabriel
-      - PG_PASSWORD=12345
-      - PG_HOST=node_db
+const sequelize = new Sequilize("node_db", "Gabriel", "12345", {
+  host: "0.0.0.0",
+  dialect: "postgres",
+  logging: false,
+});
+
 */

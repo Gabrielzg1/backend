@@ -5,8 +5,8 @@ const sequelize = require("../util/database");
 let server;
 
 describe("API TEST", () => {
-	it("My Space Test", async () => {
-		const response = await request(app).get("/users");
-		expect(response.status).toEqual(200);
-	});
+  it("/GET users route", async () => {
+    const response = await request(app).get("/users");
+    expect(response.status).toEqual(200);
+  });
 });
