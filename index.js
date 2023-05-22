@@ -47,7 +47,7 @@ app.use((error, req, res, next) => {
 
 (async () => {
   try {
-    await sequelize.sync({ force: false });
+    //await sequelize.sync({ force: false });
     if (process.env.NODE_ENV !== "test") {
       app.listen(port);
     }
