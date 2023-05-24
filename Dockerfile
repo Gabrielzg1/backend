@@ -10,7 +10,7 @@ COPY . .
 # Executar os testes
 # RUN npm test
 
-EXPOSE 3000
+EXPOSE 2020
 
 # CMD npm start
 CMD [ "npm", "start" ]
