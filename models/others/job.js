@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 /*
 Os parceiros podem administrar (CRUD) uma vaga que contem:
 - Título da vaga;
@@ -9,5 +10,36 @@ Os parceiros podem administrar (CRUD) uma vaga que contem:
 
 Os alunos podem visualizar a lista de todas as vagas disponíveis 
 e podem se candidatar a qualquer uma.
-
 */
+const jobSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    companyId: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    requirements: {
+      type: String,
+      required: true,
+    },
+    salaryRange: {
+      type: Number,
+      require: true,
+    },
+    students: {
+      type: Array,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+module.exports = mongoose.model("Job", jobSchema);

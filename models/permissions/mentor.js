@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 
 const mentorSchema = new mongoose.Schema(
   {
-    username: {
+    mentorName: {
       type: String,
       required: true,
     },
