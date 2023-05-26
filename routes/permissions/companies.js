@@ -1,9 +1,8 @@
-const controller = require("../controllers/users");
+const controller = require("../../controllers/permissions/companies");
 const router = require("express").Router();
 
 router.get("/", controller.index);
-router.get("/:userId", controller.show);
+router.get("/:adminId", controller.show);
 router.post("/", controller.create);
-router.delete("/:userId", controller.destroy);
 
 module.exports = router;

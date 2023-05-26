@@ -1,4 +1,4 @@
-const controller = require("../controllers/admins");
+const controller = require("../../controllers/permissions/admins");
 const router = require("express").Router();
 
 router.get("/", controller.index);

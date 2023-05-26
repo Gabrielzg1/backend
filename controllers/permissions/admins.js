@@ -1,7 +1,4 @@
-//import Admin from "../models/Admin";
-//import bcrypt from "bcryptjs";
-
-const Admin = require("../models/admin");
+const Admin = require("../../models/permissions/admin");
 
 class AdminController {
 	async index(req, res) {
