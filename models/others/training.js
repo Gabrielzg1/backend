@@ -24,41 +24,36 @@ ficam disponíveis com a possibilidade de se inscrever e desinscrever.
 
 */
 
-const TrainingSchema = new mongoose.Schema(
-	{
-		name: {
-			type: String,
-			required: true,
-		},
-		initialInscriptionDate: {
-			type: Date,
-			required: true,
-		},
-		finalInscriptionDate: {
-			type: Date,
-			required: true,
-		},
-		initialTraningDate: {
-			type: Date,
-			required: true,
-		},
-		finalTraningDate: {
-			type: Date,
-			required: true,
-		},
-		minimumAmount: {
-			type: Number,
-		},
-		maximumAmount: {
-			type: Number,
-		},
-		students: {
-			type: Array,
-		},
-	},
-	{
-		timestamps: true,
-	}
-);
+const TrainingSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  initialInscriptionDate: {
+    type: Date,
+    required: true,
+  },
+  finalInscriptionDate: {
+    type: Date,
+    required: true,
+  },
+  initialTrainingDate: {
+    type: Date,
+    required: true,
+  },
+  finalTrainingDate: {
+    type: Date,
+    required: true,
+  },
+  minimumAmount: {
+    type: Number,
+  },
+  maximumAmount: {
+    type: Number,
+  },
+  students: {
+    type: Array,
+  },
+});
 
 module.exports = mongoose.model("Training", TrainingSchema);
