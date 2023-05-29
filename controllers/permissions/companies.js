@@ -36,5 +36,21 @@ class CompanyController {
       return res.status(500).json({ error: "Internal server error." });
     }
   }
+  async login(req, res) {
+    try {
+      const { email, password } = req.body;
+      const admin = await Company.findOne({ email });
+      if (!admin)
+        return res.json({ msg: "Email ou senha incorreto" }).status(404);
+
+      if (admin.password !== password)
+        return res.json({ msg: "Email ou senha incorreto" }).status(404);
+
+      return res.json({ msg: true }).status(200);
+    } catch (error) {
+      console.error(err);
+      return res.status(500).json({ error: "Internal server error." });
+    }
+  }
 }
 module.exports = new CompanyController();
