@@ -14,11 +14,10 @@ class UsersController {
     try {
       const { email, password } = req.body;
       const admin = await User.findOne({ email });
-      if (!admin)
-        return res.json({ msg: "Email ou senha incorreto" }).status(404);
+      if (!admin) return res.json({ msg: false }).status(404);
 
       if (admin.password !== password)
-        return res.json({ msg: "Email ou senha incorreto" }).status(404);
+        return res.json({ msg: false }).status(404);
 
       return res.json({ msg: true }).status(200);
     } catch (error) {
