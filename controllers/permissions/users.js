@@ -10,16 +10,27 @@ class UsersController {
       return res.status(500).json({ error: "Internal server error." });
     }
   }
+  async show(req, res) {
+    try {
+      const { id } = req.params;
+      const user = await User.findById(id);
+      if (!user) return res.status(404).json({ error: "User not Found" });
+      return res.json(user).status(200);
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ error: "Internal server error." });
+    }
+  }
   async login(req, res) {
     try {
       const { email, password } = req.body;
-      const admin = await User.findOne({ email });
-      if (!admin) return res.json({ msg: false }).status(404);
+      const user = await User.findOne({ email });
+      if (!user) return res.json({ msg: false }).status(404);
 
-      if (admin.password !== password)
+      if (user.password !== password)
         return res.json({ msg: false }).status(404);
 
-      return res.json({ msg: true }).status(200);
+      return res.json({ msg: true, id: user.id }).status(200);
     } catch (error) {
       console.error(err);
       return res.status(500).json({ error: "Internal server error." });

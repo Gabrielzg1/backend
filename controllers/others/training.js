@@ -16,7 +16,7 @@ class TrainingController {
     try {
       const { id } = req.params;
       const traning = await Training.findById(id);
-      if (!traning) return res.status(404).json({ msg: "Admin not found" });
+      if (!traning) return res.status(404).json({ msg: "Training not found" });
       return res.json(traning);
     } catch (err) {
       console.log(err);
