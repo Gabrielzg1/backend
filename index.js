@@ -4,6 +4,8 @@ const sequelize = require("./util/database");
 const mongo = require("./util/mongo");
 const app = express();
 const port = 2020;
+const cors = require("cors");
+app.use(cors());
 
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -34,7 +36,7 @@ app.use("/jobs", require("./routes/others/job"));
 (async () => {
   try {
     //await sequelize.sync({ force: false });
-    mongo();
+    await mongo();
     if (process.env.NODE_ENV !== "test") {
       app.listen(port);
     }

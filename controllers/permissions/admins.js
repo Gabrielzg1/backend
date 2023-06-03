@@ -13,7 +13,7 @@ class AdminController {
 
   async show(req, res) {
     try {
-      const { id } = req.params;
+      const { id } = req.body;
       const admin = await Admin.findById(id);
       if (!admin) return res.status(404).json({ msg: "Admin not found" });
       return res.json(admin);
@@ -24,9 +24,11 @@ class AdminController {
   }
   async create(req, res) {
     try {
-      //const { username } = req.body;
+      const { username, email, password } = req.body;
       const newAdmin = await Admin.create({
-        username: "teste",
+        username,
+        email,
+        password,
       });
 
       return res.status(201).json(newAdmin);

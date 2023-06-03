@@ -12,6 +12,8 @@ services:
       - PG_USER=Gabriel
       - PG_PASSWORD=12345
       - PG_HOST=node_db
+    depends_on:
+      - mongo
   
 
   #node_db:
@@ -26,7 +28,7 @@ services:
    # volumes:
     #  - node_db_data:/var/lib/postgresql/data
 
-  mongodb:
+  mongo:
     image: mongo
     restart: always
     ports:
@@ -39,16 +41,11 @@ services:
     ports:
       - 8081:8081
     environment:
-      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_SERVER=mongo
       - ME_CONFIG_MONGODB_PORT=27017
       - ME_CONFIG_BASICAUTH_USERNAME=admin
       - ME_CONFIG_BASICAUTH_PASSWORD=password
 
     
-
-volumes:
-  node_db_data: {}
-
-
 
 
