@@ -12,6 +12,8 @@ services:
       - PG_USER=Gabriel
       - PG_PASSWORD=12345
       - PG_HOST=node_db
+    depends_on:
+      - mongodb
   
 
   #node_db:
@@ -45,10 +47,5 @@ services:
       - ME_CONFIG_BASICAUTH_PASSWORD=password
 
     
-
-volumes:
-  node_db_data: {}
-
-
 
 
