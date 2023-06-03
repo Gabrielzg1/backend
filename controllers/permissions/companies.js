@@ -24,10 +24,12 @@ class CompanyController {
 	}
 	async create(req, res) {
 		try {
-			const { companyName, password } = req.body;
+			const { username, email, password } = req.body;
 			const newCompany = await Company.create({
-				companyName,
+				username,
+				email,
 				password,
+
 			});
 
 			return res.status(201).json(newCompany);
@@ -39,11 +41,11 @@ class CompanyController {
 	async login(req, res) {
 		try {
 			const { email, password } = req.body;
-			const admin = await Company.findOne({ email });
-			if (!admin)
+			const company = await Company.findOne({ email });
+			if (!company)
 				return res.json({ msg: "Email ou senha incorreto" }).status(404);
 
-			if (admin.password !== password)
+			if (company.password !== password)
 				return res.json({ msg: "Email ou senha incorreto" }).status(404);
 
 			return res.json({ msg: true }).status(200);
