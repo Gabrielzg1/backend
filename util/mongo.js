@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 module.exports = () => {
   // ----- Ao utilizar o docker trocar para este URL ----
-  //const uri = "mongodb://mongo:27017/admin";
-  const uri = "mongodb://localhost:27017/admin";
+  const uri = "mongodb://mongo:27017/admin";
+  //const uri = "mongodb://localhost:27017/admin";
 
   mongoose
     .connect(uri, {

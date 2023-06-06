@@ -7,9 +7,6 @@ RUN npm install
 
 COPY . .
 
-# Executar os testes
-# RUN npm test
-
 EXPOSE 2020
 
 # CMD npm start
