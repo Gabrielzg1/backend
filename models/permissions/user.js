@@ -1,42 +1,48 @@
 // visualizam: Cursos, testes e vagas divulgadas;
 const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema(
-	{
-		username: {
-			type: String,
-			required: true,
-		},
+  {
+    username: {
+      type: String,
+      required: true,
+    },
 
-		email: {
-			type: String,
-			required: true,
-			index: {
-				unique: true,
-			},
-		},
-		password: {
-			type: String,
-			required: true,
-		},
-		// Treinamentos que está
-		applied: {
-			type: Array,
-		},
-		// Treinamentos que ele não passou (com indicação do motivo).
-		disapprove: [
-			{
-				id: { type: String },
-				reason: { type: String },
-			},
-		],
-		// Treinamentos que ele concluiu.
-		finished: {
-			type: Array,
-		},
-	},
-	{
-		timestamps: true,
-	}
+    email: {
+      type: String,
+      required: true,
+      index: {
+        unique: true,
+      },
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    // Treinamentos que está
+    applied: [
+      {
+        name: { type: String },
+        reason: { type: String },
+      },
+    ],
+    // Treinamentos que ele não passou (com indicação do motivo).
+    disapprove: [
+      {
+        id: { type: String },
+        reason: { type: String },
+      },
+    ],
+    // Treinamentos que ele concluiu.
+    finished: [
+      {
+        name: { type: String },
+        reason: { type: String },
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
 );
 
 module.exports = mongoose.model("User", userSchema);
