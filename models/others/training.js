@@ -1,6 +1,5 @@
 //import mongoose from "mongoose";
 const mongoose = require("mongoose");
-const { DATE, ARRAY } = require("sequelize");
 
 /*
 São criados pelos administradores e possuem:
@@ -25,35 +24,48 @@ ficam disponíveis com a possibilidade de se inscrever e desinscrever.
 */
 
 const TrainingSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  initialInscriptionDate: {
-    type: Date,
-    required: true,
-  },
-  finalInscriptionDate: {
-    type: Date,
-    required: true,
-  },
-  initialTrainingDate: {
-    type: Date,
-    required: true,
-  },
-  finalTrainingDate: {
-    type: Date,
-    required: true,
-  },
-  minimumAmount: {
-    type: Number,
-  },
-  maximumAmount: {
-    type: Number,
-  },
-  students: {
-    type: Array,
-  },
+	name: {
+		type: String,
+		required: true,
+		index: {
+			unique: true,
+		},
+	},
+	initialInscriptionDate: {
+		type: Date,
+		//required: true,
+	},
+	finalInscriptionDate: {
+		type: Date,
+		//required: true,
+	},
+	initialTrainingDate: {
+		type: Date,
+		//required: true,
+	},
+
+	finalTrainingDate: {
+		type: Date,
+		//required: true,
+	},
+	quizId: {
+		type: String,
+		required: true,
+	},
+	//Carga horária em horas
+	workload: {
+		type: Number,
+		required: true,
+	},
+	minimumAmount: {
+		type: Number,
+	},
+	maximumAmount: {
+		type: Number,
+	},
+	students: {
+		type: Array,
+	},
 });
 
 module.exports = mongoose.model("Training", TrainingSchema);
