@@ -14,7 +14,7 @@ class TrainingController {
 
   async show(req, res) {
     try {
-      const { id } = req.body;
+      const { id } = req.params;
       const traning = await Training.findById(id);
       if (!traning) return res.status(404).json({ msg: "Training not found" });
       return res.json(traning);
