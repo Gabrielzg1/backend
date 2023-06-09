@@ -1,6 +1,5 @@
 //import mongoose from "mongoose";
 const mongoose = require("mongoose");
-const { DATE, ARRAY } = require("sequelize");
 
 /*
 São criados pelos administradores e possuem:
@@ -28,21 +27,34 @@ const TrainingSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    index: {
+      unique: true,
+    },
+  },
+
+  description: {
+    type: String,
   },
   initialInscriptionDate: {
     type: Date,
-    required: true,
+    //required: true,
   },
   finalInscriptionDate: {
     type: Date,
-    required: true,
+    //required: true,
   },
   initialTrainingDate: {
     type: Date,
-    required: true,
+    //required: true,
   },
+
   finalTrainingDate: {
     type: Date,
+    //required: true,
+  },
+  //Carga horária em horas
+  workload: {
+    type: Number,
     required: true,
   },
   minimumAmount: {

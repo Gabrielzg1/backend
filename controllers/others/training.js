@@ -31,6 +31,8 @@ class TrainingController {
         finalInscriptionDate,
         initialTrainingDate,
         finalTrainingDate,
+        description,
+        workload,
         minimumAmount,
         maximumAmount,
       } = req.body;
@@ -41,6 +43,8 @@ class TrainingController {
         finalInscriptionDate,
         initialTrainingDate,
         finalTrainingDate,
+        description,
+        workload,
         minimumAmount,
         maximumAmount,
       });
