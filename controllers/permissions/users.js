@@ -96,13 +96,20 @@ class UsersController {
   async updateAppliedActivity(req, res) {
     try {
       const { userId } = req.params;
-      const { appliedId } = req.body;
+      const { appliedId, name } = req.body;
       const user = await User.findById(userId);
       if (!user) {
         return res.status(404).json();
       }
-      if (user.applied.indexOf(appliedId) !== -1) return res.status(422).json();
-      let newApplied = [].concat(user.applied, appliedId);
+      if (
+        user.applied.findIndex(
+          (item) => item.trainingId === appliedId && item.name === name
+        ) !== -1
+      ) {
+        return res.status(422).json({ msg: "Internal server error." });
+      }
+
+      let newApplied = [...user.applied, { trainingId: appliedId, name }];
 
       await user.updateOne({ applied: newApplied });
       return res.json().status(200);
@@ -112,6 +119,7 @@ class UsersController {
     }
   }
   async updateFinishedActivity(req, res) {
+    //Rever
     try {
       const { userId } = req.params;
       const { finishedId } = req.body;
@@ -134,27 +142,26 @@ class UsersController {
   async updateDisapproveActivity(req, res) {
     try {
       const { userId } = req.params;
-      const { desapproveId, reason } = req.body;
+      const { disapprovedId, name, reason } = req.body;
       const user = await User.findById(userId);
       if (!user) {
         return res.status(404).json();
       }
-      const temp = {
-        id: desapproveId,
-        reason,
-      };
-
-      const isIdAlreadyExists = user.disapprove.some(
-        (item) => item.id === temp.id
-      );
-      if (isIdAlreadyExists) {
-        return res.status(422).json();
+      if (
+        user.disapprove.findIndex(
+          (item) => item.trainingId === disapprovedId && item.name === name
+        ) !== -1
+      ) {
+        return res.status(422).json({ msg: "Internal server error." });
       }
 
-      user.disapprove.push(temp);
+      let newDisapprove = [
+        ...user.disapprove,
+        { trainingId: disapprovedId, name, reason },
+      ];
 
       // Salvando as alterações
-      user.save();
+      await user.updateOne({ disapprove: newDisapprove });
       return res.status(200).json();
     } catch (err) {
       console.error(err);

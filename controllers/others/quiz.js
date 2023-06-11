@@ -14,7 +14,7 @@ class QuizController {
   async show(req, res) {
     try {
       const { id } = req.params;
-      const quiz = await Quiz.findOne({ id });
+      const quiz = await Quiz.findOne({ trainingId: id });
       if (!quiz) return res.status(404).json({ msg: "Not found" });
       return res.json(quiz);
     } catch (err) {
@@ -26,9 +26,8 @@ class QuizController {
     try {
       const { trainingId, questions } = req.body;
 
-      const quiz = await Quiz.findOne({trainingId})
-      if(quiz)
-      return res.json({msg: "Quiz já criado"}).status(500)
+      const quiz = await Quiz.findOne({ trainingId });
+      if (quiz) return res.json({ msg: "Quiz já criado" }).status(500);
 
       const newQuiz = await Quiz.create({
         trainingId,

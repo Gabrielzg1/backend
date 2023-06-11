@@ -17,7 +17,7 @@ class TrainingController {
       const { id } = req.params;
       const traning = await Training.findById(id);
       if (!traning) return res.status(404).json({ msg: "Training not found" });
-      return res.json(traning);
+      return res.json(traning).status(200);
     } catch (err) {
       console.log(err);
       return res.status(500).json({ error: "Internal server error." });
@@ -36,6 +36,9 @@ class TrainingController {
         minimumAmount,
         maximumAmount,
       } = req.body;
+
+      const training = await Training.findOne({ name });
+      if (training) return res.status(404).json({ msg: "Nome já registrado" });
 
       const newTraning = await Training.create({
         name,

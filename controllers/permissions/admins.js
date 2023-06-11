@@ -47,7 +47,7 @@ class AdminController {
       if (admin.password !== password)
         return res.json({ msg: "Email ou senha incorreto" }).status(404);
 
-      return res.json({ msg: true }).status(200);
+      return res.json({ msg: true, id: admin.id }).status(200);
     } catch (error) {
       console.error(err);
       return res.status(500).json({ error: "Internal server error." });
