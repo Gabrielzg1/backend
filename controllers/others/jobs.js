@@ -14,12 +14,11 @@ class JobsController {
 
   async show(req, res) {
     try {
-      const { jobId } = req.params;
-      const jobs = await Jobs.findOne({ jobId });
-      if (!jobs) return res.status(404).json({ msg: "Job Not found" });
-      return res.json(jobs);
+      const { id } = req.params;
+      const job = await Jobs.findById(id);
+      if (!job) return res.status.User(404).json();
+      return res.json(job);
     } catch (err) {
-      console.log(err);
       return res.status(500).json({ error: "Internal server error." });
     }
   }
@@ -30,8 +29,8 @@ class JobsController {
         companyId,
         description,
         requirements,
-        salaryRange,
-        studentsId,
+        minimumSalary,
+        maximumSalary,
       } = req.body;
 
       const newJob = await Jobs.create({
@@ -39,8 +38,8 @@ class JobsController {
         companyId,
         description,
         requirements,
-        salaryRange,
-        studentsId,
+        minimumSalary,
+        maximumSalary,
       });
 
       return res.status(201).json(newJob);
@@ -67,6 +66,17 @@ class JobsController {
       await user.updateOne({ studentsId: newStudent });
       return res.json().status(200);
     } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Internal server error." });
+    }
+  }
+  async getJobs(req, res) {
+    try {
+      const { id } = req.params;
+      const jobs = await Jobs.find({ companyId: id });
+      if (!jobs) return res.status(404).json();
+      return res.json(jobs).status(200);
+    } catch (error) {
       console.error(err);
       return res.status(500).json({ error: "Internal server error." });
     }
