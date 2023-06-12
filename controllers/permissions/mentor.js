@@ -13,7 +13,7 @@ class mentorsController {
 
   async show(req, res) {
     try {
-      const { id } = req.body;
+      const { id } = req.params;
       const mentor = await Mentor.findById(id);
       if (!mentor) return res.status(404).json({ error: "Mentor not Found" });
       return res.json(mentor).status(200);
@@ -93,6 +93,30 @@ class mentorsController {
       return res.json({ msg: true, id: mentor.id }).status(200);
     } catch (error) {
       console.error(err);
+      return res.status(500).json({ error: "Internal server error." });
+    }
+  }
+
+  async addTraining(req, res) {
+    try {
+      const { id } = req.params;
+      const { trainingId, name } = req.body;
+      const mentor = await Mentor.findById(id);
+      if (!mentor) return res.json({ msg: "ERROR" }).status(404);
+
+      if (
+        mentor.trainings.findIndex(
+          (item) => item.trainingId === trainingId && item.name === name
+        ) !== -1
+      ) {
+        return res.status(422).json({ msg: "Internal server error." });
+      }
+
+      let newTraning = [...mentor.trainings, { trainingId, name }];
+
+      await mentor.updateOne({ trainings: newTraning });
+    } catch (error) {
+      console.error(error);
       return res.status(500).json({ error: "Internal server error." });
     }
   }

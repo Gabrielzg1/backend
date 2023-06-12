@@ -35,6 +35,7 @@ class TrainingController {
         workload,
         minimumAmount,
         maximumAmount,
+        mentorId,
       } = req.body;
 
       const training = await Training.findOne({ name });
@@ -51,6 +52,7 @@ class TrainingController {
         minimumAmount,
         maximumAmount,
         stage: "quiz",
+        mentorId,
       });
 
       //Etapas(stages):
@@ -132,8 +134,23 @@ class TrainingController {
         "jobs",
       ];
       const nextIndex = stages.indexOf(training.stage) + 1;
-      if (nextIndex > 5) return res.status(422).json();
+      if (nextIndex > 5)
+        return res.status(200).json({ stage: "Treinamento Finalizado" });
       await training.updateOne({ stage: stages[nextIndex] });
+      return res.json({ stage: stages[nextIndex] });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Internal server error." });
+    }
+  }
+  async addMentor(req, res) {
+    try {
+      const { traningId } = req.params;
+      const { mentorId } = req.body;
+      const training = await Training.findById(traningId);
+      if (!training) return res.status(422).json();
+
+      await training.updateOne({ mentorId });
     } catch (err) {
       console.error(err);
       return res.status(500).json({ error: "Internal server error." });

@@ -69,6 +69,9 @@ const TrainingSchema = new mongoose.Schema({
   stage: {
     type: String,
   },
+  mentorId: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Training", TrainingSchema);
