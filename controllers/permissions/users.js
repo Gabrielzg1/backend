@@ -168,5 +168,32 @@ class UsersController {
       return res.status(500).json({ error: "Internal server error." });
     }
   }
+
+  async cancelAppliedActivity(req, res) {
+    try {
+      const { userId } = req.params;
+      const { appliedId, name } = req.body;
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json();
+      }
+
+      const existingIndex = user.applied.findIndex(
+        (item) => item.trainingId === appliedId && item.name === name
+      );
+      if (existingIndex === -1) {
+        return res.status(422).json({ msg: "Internal server error." });
+      }
+
+      let newApplied = [...user.applied];
+      newApplied.splice(existingIndex, 1);
+
+      await user.updateOne({ applied: newApplied });
+      return res.json().status(200);
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Internal server error." });
+    }
+  }
 }
 module.exports = new UsersController();

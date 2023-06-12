@@ -5,6 +5,10 @@ router.get("/", controller.index);
 router.get("/:id", controller.show);
 router.post("/", controller.create);
 router.put("/activity/applied/:userId", controller.updateAppliedActivity);
+router.put(
+  "/activity/applied/cancel/:userId",
+  controller.cancelAppliedActivity
+);
 router.put("/activity/finished/:userId", controller.updateFinishedActivity);
 router.put("/activity/disapprove/:userId", controller.updateDisapproveActivity);
 
