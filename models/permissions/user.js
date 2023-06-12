@@ -21,22 +21,23 @@ const userSchema = new mongoose.Schema(
     // Treinamentos que está
     applied: [
       {
-        name: { type: String },
-        reason: { type: String },
+        trainingId: { type: String, required: true },
+        name: { type: String, required: true },
       },
     ],
     // Treinamentos que ele não passou (com indicação do motivo).
     disapprove: [
       {
-        id: { type: String },
+        trainingId: { type: String, required: true },
+        name: { type: String, required: true },
         reason: { type: String },
       },
     ],
     // Treinamentos que ele concluiu.
     finished: [
       {
-        name: { type: String },
-        reason: { type: String },
+        trainingId: { type: String, required: true },
+        name: { type: String, required: true },
       },
     ],
   },
