@@ -32,4 +32,5 @@ describe("API TEST - OTHERS", () => {
 		const response = await request(app).get("/training");
 		expect(response.status).toEqual(200);
 	});
+	// teste de commit
 });
