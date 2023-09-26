@@ -27,11 +27,6 @@ app.get("/teste", (req, res) => {
 //Rotas para os CRUDs
 app.use("/admins", require("./routes/permissions/admins"));
 app.use("/users", require("./routes/permissions/users"));
-app.use("/company", require("./routes/permissions/companies"));
-app.use("/mentors", require("./routes/permissions/mentor"));
-app.use("/training", require("./routes/others/trainings"));
-app.use("/quiz", require("./routes/others/quiz"));
-app.use("/jobs", require("./routes/others/job"));
 
 (async () => {
   try {
@@ -46,3 +41,5 @@ app.use("/jobs", require("./routes/others/job"));
 })();
 
 module.exports = app;
+
+// docker compose -f docker-compose.yml up -d
